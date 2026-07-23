@@ -33,23 +33,22 @@ jobs:
         python -m pip install --upgrade pip
         pip install -e .
 
-    - name: Build & Release
+    - name: Build
+      id: build
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       run: |
+        echo "RELEASE_NAME=$(date '+%Y年%m月%d日 更新')" >> $GITHUB_OUTPUT
+        echo "RELEASE_TAG=$(date +%Y%m%d)" >> $GITHUB_OUTPUT
         python main.py
         tar -cvf sdcard.tar.gz sdcard
-
-    - name: Generate release name
-      id: release_name
-      run: echo "name=$(date '+%Y年%m月%d日 更新')" >> $GITHUB_OUTPUT
 
     - name: Create release
       uses: ncipollo/release-action@v1
       with:
-        name: ${{ steps.release_name.outputs.name }}
+        name: ${{ steps.build.outputs.RELEASE_NAME }}
+        tag: ${{ steps.build.outputs.RELEASE_TAG }}
         allowUpdates: true
         bodyFile: "description.txt"
         artifacts: "sdcard.tar.gz"
         commit: master
-
