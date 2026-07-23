@@ -174,31 +174,6 @@ async def run_special(ctx: BuildContext) -> None:
                                    target_dir_field="",
                                    extract=True)
 
-    # Wiliwili - 解压后需要自定义移动操作
-    wili_asset = ctx.github.get_latest_release_asset(
-        config.SPECIAL_WILIWILI.repo, config.SPECIAL_WILIWILI.pattern
-    )
-    if wili_asset:
-        ok = await _download_one(
-            ctx, wili_asset.url,
-            ctx.sd_root / config.SPECIAL_WILIWILI.dest_filename,
-            config.SPECIAL_WILIWILI.name,
-        )
-        if ok:
-            _extract_at(ctx, ctx.sd_root / config.SPECIAL_WILIWILI.dest_filename,
-                        config.SPECIAL_WILIWILI.name)
-            wili_dir = ctx.sd_root / "wiliwili"
-            target = ctx.sd_root / "switch" / "wiliwili"
-            if wili_dir.is_dir():
-                nro = wili_dir / "wiliwili.nro"
-                if nro.is_file():
-                    target.mkdir(parents=True, exist_ok=True)
-                    shutil.move(str(nro), str(target / "wiliwili.nro"))
-                shutil.rmtree(wili_dir)
-            ctx.record_item(config.SPECIAL_WILIWILI.name, wili_asset.tag)
-    else:
-        ctx.record_failure(config.SPECIAL_WILIWILI.name)
-
     # Daybreak
     await _download_direct(ctx, config.SPECIAL_DAYBREAK)
     ctx.record_item(config.SPECIAL_DAYBREAK.name, "raw-main")

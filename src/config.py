@@ -55,7 +55,6 @@ SDCARD_DIRS: tuple[str, ...] = (
     "switch/NXThemesInstaller",
     "switch/SimpleModDownloader",
     "switch/Switchfin",
-    "switch/wiliwili",
     "switch/NX-Activity-Log",
     "switch/Sphaira",
     "switch/.overlays",
@@ -294,14 +293,6 @@ SPECIAL_AIO_UPDATER = GitHubAsset(
     pattern=r"aio-switch-updater\.zip",
     name="aio-switch-updater",
     dest_filename="aio-switch-updater.zip",
-    extract=True,
-)
-
-SPECIAL_WILIWILI = GitHubAsset(
-    repo="xfangfang/wiliwili",
-    pattern=r"wiliwili-NintendoSwitch\.zip",
-    name="wiliwili",
-    dest_filename="wiliwili-NintendoSwitch.zip",
     extract=True,
 )
 
