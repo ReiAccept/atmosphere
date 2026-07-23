@@ -1,0 +1,61 @@
+name: build
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'README.md'
+      - 'src/**'
+      - 'templates/**'
+      - 'pyproject.toml'
+  schedule:
+    - cron: 0 8 * * *
+
+env:
+  TZ: Asia/Shanghai
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v6
+      with:
+        ref: master
+
+    - name: Set up Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: '3.14'
+
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install -e .
+
+    - name: Build & Release
+      run: |
+        python main.py
+        zip -rq sdcard.zip sdcard
+
+    - name: Read description.txt
+      id: description
+      uses: juliangruber/read-file-action@v1
+      with:
+        path: ./description.txt
+
+    - name: Generate release name
+      id: release_name
+      run: echo "name=$(date '+%Y年%m月%d日 更新')" >> $GITHUB_OUTPUT
+
+    - name: Create release
+      uses: ncipollo/release-action@v1
+      with:
+        name: ${{ steps.release_name.outputs.name }}
+        allowUpdates: true
+        token: ${{ secrets.actions_release }}
+        body: "${{ steps.description.outputs.content }}"
+        artifacts: "sdcard.zip"
+
