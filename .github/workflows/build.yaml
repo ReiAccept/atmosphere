@@ -31,6 +31,8 @@ jobs:
         pip install -e .
 
     - name: Build & Release
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       run: |
         python main.py
         zip -rq sdcard.zip sdcard

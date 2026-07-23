@@ -1,8 +1,8 @@
 # atmosphere workflow
 
-## 功能如下：
+## 功能如下: 
 
-- 下载最新：
+- 下载最新: 
   - 大气层三件套
     - [x] `Atmosphere + Fusee` [From Here](https://github.com/Atmosphere-NX/Atmosphere/releases/latest)
     - [x] `Hekate + Nyx 简体中文` [From Here](https://github.com/easyworld/hekate/releases/latest)
@@ -13,7 +13,7 @@
     - [x] Hekate下删除主题和关闭插件自动启动 `CommonProblemResolver` [From Here](https://github.com/zdm65477730/CommonProblemResolver/releases/latest)
   - Nro插件
     - [x] 联网检测是否屏蔽任天堂服务器 `Switch_90DNS_tester` [From Here](https://github.com/meganukebmp/Switch_90DNS_tester/releases/latest)
-    - [x] 游戏安装，存档管理和文件传输工具 `DBI` [From Here](https://github.com/gzk47/DBIPatcher/releases/latest)
+    - [x] 游戏安装, 存档管理和文件传输工具 `DBI` [From Here](https://github.com/gzk47/DBIPatcher/releases/latest)
     - [x] 游戏安装和文件传输工具 `Awoo Installer` [From Here](https://github.com/Huntereb/Awoo-Installer/releases/latest)
     - [x] 深海工具箱 `Hekate-toolbox` [From Here](https://github.com/WerWolv/Hekate-Toolbox/releases/latest)
     - [x] 游戏游玩时间记录工具 `NX-Activity-Log` [From Here](https://github.com/zdm65477730/NX-Activity-Log/releases/latest)
@@ -64,7 +64,7 @@ pip install -e .
 # 完整构建
 python -m src.main
 
-# 只显示计划，不下载
+# 只显示计划, 不下载
 python -m src.main --dry-run
 
 # 只运行指定分组
@@ -95,5 +95,5 @@ python -m src.main --max-parallel 3
 | `configs` | 生成配置文件 |
 | `finalize` | 收尾处理 (重命名 payload, 清理) |
 
-注意：全量运行会清空并重建 `sdcard` 目录；使用 `--only` 时会保留已有内容，仅补齐目录并执行指定分组。
+注意: 全量运行会清空并重建 `sdcard` 目录；使用 `--only` 时会保留已有内容, 仅补齐目录并执行指定分组。
 

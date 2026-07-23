@@ -1,7 +1,7 @@
 """目录结构构建器和下载编排器。
 
 此模块将 GitHub API 客户端、下载管理器、
-解压器和模板渲染器串联起来，生成最终的 sdcard 目录树。
+解压器和模板渲染器串联起来, 生成最终的 sdcard 目录树。
 """
 
 from __future__ import annotations
@@ -249,7 +249,7 @@ async def run_configs(ctx: BuildContext) -> None:
         for dest_rel in dest_rels:
             dest = ctx.sd_root / dest_rel
             if not src.is_file():
-                logger.error(f"缺少模板：{src_name}")
+                logger.error(f"缺少模板: {src_name}")
                 ctx.record_failure(f"template:{src_name}")
                 continue
             dest.parent.mkdir(parents=True, exist_ok=True)
@@ -260,7 +260,7 @@ async def run_configs(ctx: BuildContext) -> None:
 
 
 async def run_finalize(ctx: BuildContext) -> None:
-    """收尾 sdcard 目录树：重命名 payload、清理多余文件。"""
+    """收尾 sdcard 目录树: 重命名 payload、清理多余文件。"""
     logger.info("正在收尾设置……")
 
     if ctx.dry_run:
@@ -308,7 +308,7 @@ def validate_structure(ctx: BuildContext) -> None:
     missing = 0
     for rel in REQUIRED_PATHS:
         if not (ctx.sd_root / rel).exists():
-            logger.error(f"缺少预期文件：{rel}")
+            logger.error(f"缺少预期文件: {rel}")
             missing += 1
 
     if missing:
@@ -321,11 +321,11 @@ def validate_required(ctx: BuildContext) -> None:
     missing = 0
     for item in REQUIRED_ITEMS:
         if not ctx.has_required(item):
-            logger.error(f"缺少必需组件：{item}")
+            logger.error(f"缺少必需组件: {item}")
             ctx.record_failure(item)
             missing += 1
     if missing:
-        raise BuildError("缺少必需组件，正在中止。")
+        raise BuildError("缺少必需组件, 正在中止。")
 
 
 # ======================================================================
@@ -336,8 +336,8 @@ def validate_required(ctx: BuildContext) -> None:
 def setup_workspace(ctx: BuildContext, *, clean: bool = True) -> None:
     """创建 sdcard 目录树。
 
-    当 *clean* 为 True 时，先删除已有的 sdcard 目录树；
-    否则保留已有内容，仅创建缺失的目录。
+    当 *clean* 为 True 时, 先删除已有的 sdcard 目录树；
+    否则保留已有内容, 仅创建缺失的目录。
     """
     if clean and ctx.sd_root.exists():
         shutil.rmtree(ctx.sd_root)
@@ -368,9 +368,9 @@ async def _download_one(
     dest: Path,
     description: str,
 ) -> bool:
-    """下载单个文件（同步，不使用并行队列）。"""
+    """下载单个文件（同步, 不使用并行队列）。"""
     if ctx.dry_run:
-        logger.info(f"[试运行] 将下载 {description}，来自 {url}")
+        logger.info(f"[试运行] 将下载 {description}, 来自 {url}")
         return True
 
     mgr = DownloadManager()
@@ -384,9 +384,9 @@ async def _download_one(
 
 
 async def _download_direct(ctx: BuildContext, dd: DirectDownload) -> bool:
-    """下载直链项目，可选择性解压。"""
+    """下载直链项目, 可选择性解压。"""
     if ctx.dry_run:
-        logger.info(f"[试运行] 将下载 {dd.name}，来自 {dd.url}")
+        logger.info(f"[试运行] 将下载 {dd.name}, 来自 {dd.url}")
         return True
 
     dest = ctx.sd_root / dd.dest_filename
@@ -414,10 +414,10 @@ async def _download_github_assets(
 ) -> None:
     """并行下载一批 GitHub release 资源。
 
-    对每个 :class:`GitHubAsset`，先解析最新匹配的 release，
+    对每个 :class:`GitHubAsset`, 先解析最新匹配的 release, 
     然后在共享的并行队列中一起下载。
     """
-    # 阶段 1：解析 URL
+    # 阶段 1: 解析 URL
     resolved: list[tuple[GitHubAsset, str, str]] = []  # (asset, url, tag)
     for ga in assets:
         asset = ctx.github.get_latest_release_asset(ga.repo, ga.pattern)
@@ -429,7 +429,7 @@ async def _download_github_assets(
     if not resolved:
         return
 
-    # 阶段 2：并行下载
+    # 阶段 2: 并行下载
     mgr = DownloadManager()
     for ga, url, _tag in resolved:
         dest = ctx.sd_root / ga.dest_filename
@@ -437,7 +437,7 @@ async def _download_github_assets(
 
     results = await mgr.wait_all()
 
-    # 阶段 3：下载后处理（解压、移动）
+    # 阶段 3: 下载后处理（解压、移动）
     for ga, _url, tag in resolved:
         job = results.get(ga.name)
         if not job or job.status != "ok":
@@ -488,7 +488,7 @@ async def _clone_theme_patches(ctx: BuildContext) -> None:
         shutil.rmtree(clone_dir)
         ctx.record_item("theme-patches", version)
     except subprocess.CalledProcessError as exc:
-        logger.error(f"theme-patches 下载失败：{exc}")
+        logger.error(f"theme-patches 下载失败: {exc}")
         ctx.record_failure("theme-patches")
         if clone_dir.exists():
             shutil.rmtree(clone_dir)
@@ -497,7 +497,7 @@ async def _clone_theme_patches(ctx: BuildContext) -> None:
 async def _download_oc_toolkit(ctx: BuildContext) -> None:
     """下载 OC Toolkit（kip + toolkit zip）。"""
     if ctx.dry_run:
-        logger.info(f"[试运行] 将下载 OC Toolkit，来自 {config.OC_TOOLKIT_REPO}")
+        logger.info(f"[试运行] 将下载 OC Toolkit, 来自 {config.OC_TOOLKIT_REPO}")
         return
 
     try:
@@ -564,14 +564,14 @@ def _extract_at(
     description: str,
     subdir: str = "",
 ) -> None:
-    """解压 *archive*，可选择性解压到 sd_root 的 *subdir* 子目录中。"""
+    """解压 *archive*, 可选择性解压到 sd_root 的 *subdir* 子目录中。"""
     if ctx.dry_run:
         return
     try:
         dest = (ctx.sd_root / subdir) if subdir else None
         extract_archive(archive, description, dest)
     except Exception as exc:
-        logger.error(f"{description} 解压失败：{exc}")
+        logger.error(f"{description} 解压失败: {exc}")
         ctx.record_failure(description)
 
 
@@ -593,7 +593,7 @@ def _move_file(
 
 
 def _copy_tree(src: Path, dest: Path) -> None:
-    """递归复制 *src* 到 *dest*，自动创建父目录。"""
+    """递归复制 *src* 到 *dest*, 自动创建父目录。"""
     dest.mkdir(parents=True, exist_ok=True)
     # shutil.copytree 并允许目标已存在
     shutil.copytree(src, dest, dirs_exist_ok=True)

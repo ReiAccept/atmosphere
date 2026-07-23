@@ -24,7 +24,7 @@ import logging
 
 logger = logging.getLogger(__name__)
 
-# ANSI 颜色码，用于终端输出
+# ANSI 颜色码, 用于终端输出
 _YELLOW = "\033[33m"
 _GREEN = "\033[32m"
 _NC = "\033[0m"
@@ -48,7 +48,7 @@ class ColoredFormatter(logging.Formatter):
 
 
 def setup_logging() -> None:
-    """配置根日志记录器，输出带颜色的终端日志。"""
+    """配置根日志记录器, 输出带颜色的终端日志。"""
     handler = logging.StreamHandler()
     handler.setFormatter(ColoredFormatter("%(levelname)s %(message)s"))
     logging.basicConfig(level=logging.INFO, handlers=[handler])
@@ -75,14 +75,14 @@ def build_arg_parser() -> argparse.ArgumentParser:
         metavar="GROUPS",
         help=(
             "仅运行选定的分组（逗号分隔）。"
-            f"可用分组：{', '.join(config.ALL_GROUPS)}"
+            f"可用分组: {', '.join(config.ALL_GROUPS)}"
         ),
     )
     p.add_argument(
         "--max-parallel",
         type=int,
         default=config.MAX_PARALLEL_DOWNLOADS,
-        help=f"最大并行下载数（默认：{config.MAX_PARALLEL_DOWNLOADS}）。",
+        help=f"最大并行下载数（默认: {config.MAX_PARALLEL_DOWNLOADS}）。",
     )
     return p
 
@@ -90,7 +90,7 @@ def build_arg_parser() -> argparse.ArgumentParser:
 def resolve_enabled_groups(only_arg: str | None) -> frozenset[str]:
     """将 ``--only`` 参数解析为一组启用的分组。
 
-    ``"all"`` 返回空集合（表示：所有分组均启用）。
+    ``"all"`` 返回空集合（表示: 所有分组均启用）。
     未知的分组名称将导致程序退出并报错。
     """
     if not only_arg:
@@ -103,7 +103,7 @@ def resolve_enabled_groups(only_arg: str | None) -> frozenset[str]:
         if group == "all":
             return frozenset()
         if group not in config.ALL_GROUPS:
-            print(f"--only 的未知分组：{group}", file=sys.stderr)
+            print(f"--only 的未知分组: {group}", file=sys.stderr)
             sys.exit(1)
         enabled.add(group)
 
@@ -121,7 +121,7 @@ async def run_build(
 ) -> None:
     """按依赖顺序执行构建阶段。
 
-    *enabled* 为 ``frozenset()``（空）时运行所有分组，
+    *enabled* 为 ``frozenset()``（空）时运行所有分组, 
     或为特定分组名称的集合。
     """
 
@@ -144,7 +144,7 @@ async def run_build(
         cleanup_stale_tmp(ctx.sd_root)
     else:
         logger.info(
-            "正在创建目录结构，保留现有 sdcard 内容……"
+            "正在创建目录结构, 保留现有 sdcard 内容……"
         )
         setup_workspace(ctx, clean=False)
         cleanup_stale_tmp(ctx.sd_root)
@@ -192,10 +192,10 @@ async def run_build(
 def _print_failure_summary(ctx: BuildContext) -> None:
     """打印所有下载失败的摘要。"""
     if not ctx.failed_items:
-        logger.info("所有下载均已完成，无失败记录。")
+        logger.info("所有下载均已完成, 无失败记录。")
         return
 
-    logger.info(f"部分下载失败（{len(ctx.failed_items)} 项）：")
+    logger.info(f"部分下载失败（{len(ctx.failed_items)} 项）: ")
     for item in ctx.failed_items:
         print(f" - {item}")
 
@@ -221,9 +221,9 @@ def main(argv: list[str] | None = None) -> None:
             "试运行模式已启用。不会进行下载或文件系统更改。"
         )
         if not enabled:
-            logger.info("已选分组：全部")
+            logger.info("已选分组: 全部")
         else:
-            logger.info("已选分组：")
+            logger.info("已选分组: ")
             for g in config.ALL_GROUPS:
                 if g in enabled:
                     print(f" - {g}")
@@ -242,9 +242,9 @@ def main(argv: list[str] | None = None) -> None:
         ctx.github.close()
 
     if ctx.failed_items:
-        logger.info("设置已完成，但存在警告。请查看上述失败项。")
+        logger.info("设置已完成, 但存在警告。请查看上述失败项。")
         print(
-            f"\n{_YELLOW}你的 Switch SD 卡已准备就绪，"
+            f"\n{_YELLOW}你的 Switch SD 卡已准备就绪, "
             f"但部分可选项目失败。{_NC}"
         )
     else:
@@ -264,11 +264,11 @@ def _check_deps() -> None:
     for tool in ("git",):
         if shutil.which(tool) is None:
             missing.append(tool)
-            logger.error(f"缺少依赖：{tool}")
+            logger.error(f"缺少依赖: {tool}")
 
     if missing:
         print(
-            "请先安装必需的依赖：git。",
+            "请先安装必需的依赖: git。",
             file=sys.stderr,
         )
         sys.exit(1)

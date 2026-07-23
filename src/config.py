@@ -18,7 +18,13 @@ MAX_PARALLEL_DOWNLOADS: int = int(os.environ.get("MAX_PARALLEL_DOWNLOADS", "5"))
 DOWNLOAD_MAX_RETRIES: int = 3
 DOWNLOAD_RETRY_DELAY: float = 2.0
 DOWNLOAD_TIMEOUT: float = 300.0
-GITHUB_TOKEN: str | None = os.environ.get("GITHUB_TOKEN")
+# GitHub Actions 自动注入 secrets.GITHUB_TOKEN;
+# 也支持 GH_TOKEN（ gh CLI 使用的变量）作为备选。
+GITHUB_TOKEN: str | None = (
+    os.environ.get("GITHUB_TOKEN")
+    or os.environ.get("GH_TOKEN")
+    or os.environ.get("GITHUB_ACTOR_TOKEN")
+)
 
 # ---- 验证所需的必需组件 ----
 REQUIRED_ITEMS: tuple[str, ...] = ("Atmosphere", "Fusee", "Hekate + Nyx CHS")
@@ -77,7 +83,7 @@ CLEANUP_FILES: tuple[str, ...] = (
     "switch/daybreak.nro",
 )
 
-# ---- 模板文件映射：源 -> 目标 ----
+# ---- 模板文件映射: 源 -> 目标 ----
 TEMPLATE_MAPPING: dict[str, list[str]] = {
     "hekate_ipl.ini": ["bootloader/hekate_ipl.ini"],
     "exosphere.ini": ["exosphere.ini"],
@@ -90,7 +96,7 @@ TEMPLATE_MAPPING: dict[str, list[str]] = {
 # ---- 下载目录定义 ----
 
 # 每个目录条目描述要下载的内容及其放置位置。
-# 类型：
+# 类型: 
 #   "github_release"  — 获取匹配正则的最新 release 资源
 #   "direct_url"      — 从固定 URL 下载
 #   "git_clone"       — 浅克隆 git 仓库
@@ -104,7 +110,7 @@ class GitHubAsset(NamedTuple):
     repo: str  # 例如 "Atmosphere-NX/Atmosphere"
     pattern: str  # 匹配资源名称的正则表达式
     name: str  # 显示名称
-    dest_filename: str  # 下载后的文件名（先放在当前目录，再移动）
+    dest_filename: str  # 下载后的文件名（先放在当前目录, 再移动）
     extract: bool = False  # 下载后是否解压
     extract_subdir: str = ""  # 解压到 sdcard 内的子目录
     target_path: str = ""  # sdcard 内的最终路径（用于不需要解压的文件）

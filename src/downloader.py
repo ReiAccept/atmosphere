@@ -1,8 +1,8 @@
 """带重试和进度跟踪的并行下载管理器。
 
-使用 asyncio + httpx 并发下载多个文件，
-遵守可配置的最大并行数。每个下载拥有多次重试机会，
-并通过临时文件暂存，确保部分下载不会被误认为已完成。
+使用 asyncio + httpx 并发下载多个文件, 
+遵守可配置的最大并行数。每个下载拥有多次重试机会, 
+并通过临时文件暂存, 确保部分下载不会被误认为已完成。
 """
 
 from __future__ import annotations
@@ -68,7 +68,7 @@ class DownloadManager:
         dest: Path,
         description: str,
     ) -> None:
-        """安排一个下载任务，在调用 *wait_all* 之前不会开始。"""
+        """安排一个下载任务, 在调用 *wait_all* 之前不会开始。"""
         job = DownloadJob(key=key, url=url, dest=dest, description=description)
         self._jobs[key] = job
         self._tasks.append(asyncio.create_task(self._run_one(job)))
@@ -78,7 +78,7 @@ class DownloadManager:
     # --------------------------------------------------------------
 
     async def wait_all(self) -> dict[str, DownloadJob]:
-        """等待所有排队的下载完成，返回最终状态映射。"""
+        """等待所有排队的下载完成, 返回最终状态映射。"""
         if self._tasks:
             await asyncio.gather(*self._tasks, return_exceptions=True)
             self._tasks.clear()
