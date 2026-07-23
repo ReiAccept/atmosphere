@@ -54,7 +54,6 @@ SDCARD_DIRS: tuple[str, ...] = (
     "switch/Moonlight",
     "switch/NXThemesInstaller",
     "switch/SimpleModDownloader",
-    "switch/Switchfin",
     "switch/NX-Activity-Log",
     "switch/Sphaira",
     "switch/.overlays",
@@ -219,13 +218,6 @@ HOMEBREW_APPS: tuple[GitHubAsset, ...] = (
         name="Moonlight",
         dest_filename="Moonlight-Switch.nro",
         target_path="switch/Moonlight/",
-    ),
-    GitHubAsset(
-        repo="dragonflylee/switchfin",
-        pattern=r"Switchfin\.nro",
-        name="Switchfin",
-        dest_filename="Switchfin.nro",
-        target_path="switch/Switchfin/",
     ),
     GitHubAsset(
         repo="exelix11/SwitchThemeInjector",
