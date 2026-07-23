@@ -157,13 +157,6 @@ CORE_SIGPATCHES = DirectDownload(
     extract=True,
 )
 
-CORE_LOGO = DirectDownload(
-    url="https://raw.githubusercontent.com/huangqian8/SwitchPlugins/main/theme/logo.zip",
-    name="Logo",
-    dest_filename="logo.zip",
-    extract=True,
-)
-
 # ---- Payload 定义 ----
 PAYLOADS: tuple[GitHubAsset, ...] = (
     GitHubAsset(

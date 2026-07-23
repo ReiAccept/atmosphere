@@ -136,9 +136,7 @@ async def run_core(ctx: BuildContext) -> None:
     await _download_direct(ctx, config.CORE_SIGPATCHES)
     ctx.record_item(config.CORE_SIGPATCHES.name, "raw-main")
 
-    # -- Logo --
-    await _download_direct(ctx, config.CORE_LOGO)
-    ctx.record_item(config.CORE_LOGO.name, "raw-main")
+    subprocess.run(["cp", "-r", "assets/*", str(ctx.sd_root)])
 
 
 async def run_payload(ctx: BuildContext) -> None:
