@@ -242,17 +242,9 @@ def main(argv: list[str] | None = None) -> None:
         ctx.github.close()
 
     if ctx.failed_items:
-        logger.info("设置已完成, 但存在警告。请查看上述失败项。")
-        print(
-            f"\n{_YELLOW}你的 Switch SD 卡已准备就绪, "
-            f"但部分可选项目失败。{_NC}"
-        )
+        logger.info("已完成, 但存在警告。")
     else:
-        logger.info("设置已成功完成！")
-        print(
-            f"\n{_GREEN}你的 Switch SD 卡已准备就绪！"
-            f"{_NC}"
-        )
+        logger.info("已成功完成！")
 
 
 def _check_deps() -> None:
