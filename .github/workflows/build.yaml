@@ -4,11 +4,6 @@ on:
   push:
     branches:
       - master
-    paths:
-      - 'README.md'
-      - 'src/**'
-      - 'templates/**'
-      - 'pyproject.toml'
   schedule:
     - cron: 0 8 * * *
 
