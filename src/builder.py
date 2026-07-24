@@ -18,13 +18,11 @@ import logging
 from src.config import (
     GitHubAsset,
     DirectDownload,
-    TEMPLATE_MAPPING,
     CLEANUP_FILES,
     REQUIRED_ITEMS,
     REQUIRED_PATHS,
     SDCARD_DIR,
     SDCARD_DIRS,
-    TEMPLATE_DIR,
     DESCRIPTION_FILE,
 )
 from src.github_api import GitHubClient
@@ -212,25 +210,6 @@ async def run_system(ctx: BuildContext) -> None:
             ctx.record_item(config.SYSTEM_EMUIIBO.name, emu_asset.tag)
     else:
         ctx.record_failure(config.SYSTEM_EMUIIBO.name)
-
-
-async def run_configs(ctx: BuildContext) -> None:
-    """从模板生成配置文件。"""
-    logger.info("正在生成配置文件……")
-
-    for src_name, dest_rels in TEMPLATE_MAPPING.items():
-        src = TEMPLATE_DIR / src_name
-        for dest_rel in dest_rels:
-            dest = ctx.sd_root / dest_rel
-            if not src.is_file():
-                logger.error(f"缺少模板: {src_name}")
-                ctx.record_failure(f"template:{src_name}")
-                continue
-            dest.parent.mkdir(parents=True, exist_ok=True)
-            if not ctx.dry_run:
-                shutil.copy2(src, dest)
-
-    logger.info("配置文件生成完毕")
 
 
 async def run_finalize(ctx: BuildContext) -> None:

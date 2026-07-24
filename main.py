@@ -9,7 +9,6 @@ from src.builder import (
     BuildContext,
     BuildError,
     cleanup_stale_tmp,
-    run_configs,
     run_core,
     run_finalize,
     run_homebrew,
@@ -133,7 +132,6 @@ async def run_build(
     has_homebrew = _on("homebrew")
     has_special = _on("special")
     has_system = _on("system")
-    has_configs = _on("configs")
     has_finalize = _on("finalize")
 
     is_full = enabled == frozenset()
@@ -176,16 +174,12 @@ async def run_build(
     if any([has_core, has_payload, has_homebrew, has_special, has_system]):
         ctx.write_description()
 
-    # 6. 配置生成
-    if has_configs:
-        await run_configs(ctx)
-
     # 7. 收尾
     if has_finalize:
         await run_finalize(ctx)
 
     # 8. 完整运行验证
-    if has_core and has_configs and has_finalize:
+    if has_core and has_finalize:
         validate_structure(ctx)
 
 

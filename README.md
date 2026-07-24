@@ -62,7 +62,7 @@ python main.py
 python main.py --dry-run
 
 # 只运行指定分组
-python main.py --only core,configs,finalize
+python main.py --only core,finalize
 
 # 查看帮助
 python main.py --help
@@ -86,7 +86,6 @@ python main.py --max-parallel 3
 | `homebrew` | NRO 自制应用 |
 | `special` | 特殊下载 (Awoo, Sphaira, OC Toolkit 等) |
 | `system` | 系统模块和 Overlay 插件 |
-| `configs` | 生成配置文件 |
 | `finalize` | 收尾处理 (重命名 payload, 清理) |
 
 注意: 全量运行会清空并重建 `sdcard` 目录；使用 `--only` 时会保留已有内容, 仅补齐目录并执行指定分组。

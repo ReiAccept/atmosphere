@@ -7,7 +7,6 @@ from pathlib import Path
 
 # ---- 路径 ----
 SCRIPT_DIR: Path = Path(__file__).resolve().parent.parent
-TEMPLATE_DIR: Path = SCRIPT_DIR / "templates"
 SDCARD_DIR: Path = SCRIPT_DIR / "sdcard"
 DESCRIPTION_FILE: Path = SCRIPT_DIR / "description.txt"
 
@@ -78,18 +77,7 @@ REQUIRED_PATHS: tuple[str, ...] = (
 CLEANUP_FILES: tuple[str, ...] = (
     "switch/haze.nro",
     "switch/reboot_to_payload.nro",
-    "switch/daybreak.nro",
 )
-
-# ---- 模板文件映射: 源 -> 目标 ----
-TEMPLATE_MAPPING: dict[str, list[str]] = {
-    "hekate_ipl.ini": ["bootloader/hekate_ipl.ini"],
-    "exosphere.ini": ["exosphere.ini"],
-    "hosts.txt": ["atmosphere/hosts/emummc.txt", "atmosphere/hosts/sysmmc.txt"],
-    "boot.ini": ["boot.ini"],
-    "override_config.ini": ["atmosphere/config/override_config.ini"],
-    "system_settings.ini": ["atmosphere/config/system_settings.ini"],
-}
 
 # ---- 下载目录定义 ----
 
@@ -386,6 +374,5 @@ ALL_GROUPS: tuple[str, ...] = (
     "homebrew",
     "special",
     "system",
-    "configs",
     "finalize",
 )
