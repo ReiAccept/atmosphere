@@ -136,7 +136,16 @@ async def run_core(ctx: BuildContext) -> None:
     await _download_direct(ctx, config.CORE_SIGPATCHES)
     ctx.record_item(config.CORE_SIGPATCHES.name, "raw-main")
 
-    subprocess.run(["cp", "-r", "assets/*", str(ctx.sd_root)])
+    if not ctx.dry_run:
+        assets_dir = Path("assets")
+        if assets_dir.is_dir():
+            for item in assets_dir.iterdir():
+                dest = ctx.sd_root / item.name
+                if item.is_dir():
+                    shutil.copytree(item, dest, dirs_exist_ok=True)
+                elif item.is_file():
+                    shutil.copy2(item, dest)
+            logger.info("assets 目录已合并到 sdcard 目录树")
 
 
 async def run_payload(ctx: BuildContext) -> None:
