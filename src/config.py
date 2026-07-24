@@ -281,13 +281,6 @@ SPECIAL_AIO_UPDATER = GitHubAsset(
     extract=True,
 )
 
-SPECIAL_DAYBREAK = DirectDownload(
-    url="https://raw.githubusercontent.com/huangqian8/SwitchPlugins/main/plugins/daybreak_x.zip",
-    name="daybreak",
-    dest_filename="daybreak_x.zip",
-    extract=True,
-)
-
 # ---- OC Toolkit ----
 OC_TOOLKIT_REPO = "halop/OC_Toolkit_SC_EOS"
 OC_TOOLKIT_KIP_PATTERN = r"kip\.zip"

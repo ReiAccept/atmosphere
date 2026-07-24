@@ -172,10 +172,6 @@ async def run_special(ctx: BuildContext) -> None:
                                    target_dir_field="",
                                    extract=True)
 
-    # Daybreak
-    await _download_direct(ctx, config.SPECIAL_DAYBREAK)
-    ctx.record_item(config.SPECIAL_DAYBREAK.name, "raw-main")
-
     # 主题补丁（git clone）
     await _clone_theme_patches(ctx)
 
