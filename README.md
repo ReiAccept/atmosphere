@@ -1,4 +1,4 @@
-# atmosphere workflow
+# 大气层整合包生成工具 - Nintendo Switch Atmosphere CFW package builder
 
 - 大气层三件套
   - [x] `Atmosphere + Fusee` [From Here](https://github.com/Atmosphere-NX/Atmosphere/releases/latest)
@@ -56,19 +56,19 @@ pip install -e .
 
 ```bash
 # 完整构建
-python -m src.main
+python main.py
 
 # 只显示计划, 不下载
-python -m src.main --dry-run
+python main.py --dry-run
 
 # 只运行指定分组
-python -m src.main --only core,configs,finalize
+python main.py --only core,configs,finalize
 
 # 查看帮助
-python -m src.main --help
+python main.py --help
 
 # 控制并行下载数
-python -m src.main --max-parallel 3
+python main.py --max-parallel 3
 ```
 
 ### 系统依赖
@@ -81,7 +81,7 @@ python -m src.main --max-parallel 3
 
 | 分组 | 说明 |
 |------|------|
-| `core` | 大气层三件套 (Atmosphere, Fusee, Hekate, Sigpatches, Logo) |
+| `core` | 大气层三件套 (Atmosphere, Fusee, Hekate, Sigpatches) |
 | `payload` | 引导时 payload 插件 |
 | `homebrew` | NRO 自制应用 |
 | `special` | 特殊下载 (Awoo, Sphaira, OC Toolkit 等) |

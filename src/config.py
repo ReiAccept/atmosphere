@@ -150,13 +150,6 @@ CORE_HEKATE = GitHubAsset(
     extract=True,
 )
 
-CORE_SIGPATCHES = DirectDownload(
-    url="https://raw.githubusercontent.com/huangqian8/SwitchPlugins/main/plugins/sigpatches.zip",
-    name="Sigpatches",
-    dest_filename="sigpatches.zip",
-    extract=True,
-)
-
 # ---- Payload 定义 ----
 PAYLOADS: tuple[GitHubAsset, ...] = (
     GitHubAsset(

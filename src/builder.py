@@ -132,10 +132,6 @@ async def run_core(ctx: BuildContext) -> None:
     else:
         ctx.record_failure(config.CORE_HEKATE.name)
 
-    # -- Sigpatches --
-    await _download_direct(ctx, config.CORE_SIGPATCHES)
-    ctx.record_item(config.CORE_SIGPATCHES.name, "raw-main")
-
     if not ctx.dry_run:
         assets_dir = Path("assets")
         if assets_dir.is_dir():

@@ -1,13 +1,12 @@
 [project]
-name = "switchscript"
+name = "AtmosphereBuilder"
 version = "1.0.0"
-description = "大气层个人整合包生成工具 - Nintendo Switch Atmosphere CFW package builder"
+description = "大气层整合包生成工具 - Nintendo Switch Atmosphere CFW package builder"
 readme = "README.md"
 requires-python = ">=3.10"
 license = { text = "MIT" }
 authors = [
-    { name = "Fraxalotl" },
-    { name = "huangqian8" },
+    { name = "ReiAccept" },
 ]
 keywords = ["nintendo-switch", "atmosphere", "cfw", "hekate", "homebrew"]
 classifiers = [
